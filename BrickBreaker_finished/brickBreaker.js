@@ -64,7 +64,7 @@ Ball.prototype.update = function(){
     }
 
     //  checks if the ball hits the floor, on contact it alerts a game over message
-    if( this.y + this.radius == canvas.height ){
+    if( this.y + this.radius > canvas.height ){
         alert("Game Over!");
     }
 
@@ -77,6 +77,7 @@ Ball.prototype.update = function(){
 *   class Paddle represent the paddle,
 *   with location (x, y),
 *   size of paddle (height, width),
+*   its speed (dx),
 *   2D rendering context where it is drawn
 */
 function Paddle(options) {
@@ -85,6 +86,7 @@ function Paddle(options) {
     this.y = options.y;
     this.height = options.height;
     this.width = options.width;
+    this.dx = options.dx;
 }
 
 /*
@@ -109,13 +111,13 @@ Paddle.prototype.update = function(){
     //  if left arrow key is pressed and the paddle is not touching
     //  left wall, then it updates the x location to 1 unit left.
     if(leftKeyPressed && paddle.x){
-        paddle.x = paddle.x - 1;
+        this.x = this.x - this.dx;
     }
 
     //  if left arrow key is pressed and the paddle is not touching
     //  right wall, then it updates the x location to 1 unit right.
     if(rightKeyPressed && (paddle.x+paddle.width)<canvas.width){
-        paddle.x = paddle.x + 1;
+        this.x = this.x + this.dx;
     }
 }
 
@@ -259,8 +261,9 @@ var paddle = new Paddle({
     context:context,
     x:1,
     y:270,
-    height:20,
-    width:80
+    height:10,
+    width:80,
+    dx:3
 });
 
 /*
