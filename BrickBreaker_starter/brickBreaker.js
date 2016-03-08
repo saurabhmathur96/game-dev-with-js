@@ -36,11 +36,11 @@ function Ball(options) {
 Ball.prototype.render = function(){
     this.context.beginPath();   //  to start drawing the object
 
-    this.context.arc(   this.x,     // x co-ordinate of where it is to be drawn
-                        this.y,     // y co-ordinate of where it is to be drawn
-                        this.radius, // radius of the ball
-                        0,          // beginning angle of the arc
-                        2*Math.PI)  // ending angle of the arc
+    this.context.arc(   ,   // x co-ordinate of where it is to be drawn
+                        ,   // y co-ordinate of where it is to be drawn
+                        ,   // radius of the ball
+                        ,   // beginning angle of the arc
+                        )   // ending angle of the arc
 
     this.context.fill();    //  to fill the arc with color
 }
@@ -51,27 +51,19 @@ Ball.prototype.render = function(){
 */
 Ball.prototype.update = function(){
 
-    //  updates the velocity of Ball in x direction, reverses the direction of
+    //  update the velocity of Ball in x direction, reverses the direction of
     //  x-velocity when it hits the left or right wall.
-    if( this.x + this.radius > canvas.width || this.x - this.radius < 0 ){
-       this.dx = -this.dx;
-    }
 
-    //  updates the velocity of Ball in y direction, reverses the direction of
+
+    //  update the velocity of Ball in y direction, reverses the direction of
     //  y-velocity when it hits the top or bottom wall.
-    if( this.y + this.radius > canvas.height || this.y - this.radius < 0 ){
-        this.dy = -this.dy;
-    }
 
-    //  checks if the ball hits the floor, on contact it alerts a game over message
-    if( this.y + this.radius > canvas.height ){
-        alert("Game Over! Game will be refreshed!");
-        window.location.reload();
-    }
+
+    //  check if the ball hits the floor, on contact give game over message
+
 
     //  Update location (x, y) according to velocity
-    this.x+= this.dx;  //  update x location
-    this.y+= this.dy;  //  update y location
+
 }
 
 /*
@@ -96,10 +88,10 @@ function Paddle(options) {
 Paddle.prototype.render = function() {
     this.context.beginPath();   //  to start drawing the object
 
-    this.context.rect(  this.x,      // x co-ordinate of where it is to be drawn
-                        this.y,       // y co-ordinate of where it is to be drawn
-                        this.width,   // width of the rectangle
-                        this.height); // height of the rectangle
+    this.context.rect(  ,   // x co-ordinate of where it is to be drawn
+                        ,   // y co-ordinate of where it is to be drawn
+                        ,   // width of the rectangle
+                        );  // height of the rectangle
 
     this.context.fill();    //  to fill the paddle with color
 }
@@ -111,15 +103,11 @@ Paddle.prototype.update = function(){
 
     //  if left arrow key is pressed and the paddle is not touching
     //  left wall, then it updates the x location to 1 unit left.
-    if(leftKeyPressed && paddle.x > 0){
-        this.x = this.x - this.dx;
-    }
+
 
     //  if left arrow key is pressed and the paddle is not touching
     //  right wall, then it updates the x location to 1 unit right.
-    if(rightKeyPressed && (paddle.x+paddle.width)<canvas.width){
-        this.x = this.x + this.dx;
-    }
+
 }
 
 //  method listenKeyPress - listens to keypress, specifically left and right
@@ -159,22 +147,12 @@ function listenKeyPress(){
 */
 function update(){
     //  paddle-ball collision
-    if(ball.y+ball.radius > paddle.y && (paddle.x < ball.x  && ball.x< paddle.x+80) && ball.dy>0){
-        ball.dy=-ball.dy
-    }
+
     //  brick-ball collision
-    for(var i=0;i<bricks.length;i++){
-        if(bricks[i].update()){
-            bricks.splice(i,1);
-            console.clear();
-            console.log("Collision");
-            break;
-        }
-    }
+
     //  ball update call
-    ball.update();
+
     //  paddle update call
-    paddle.update();
 }
 
 /**
@@ -197,10 +175,10 @@ function Brick(options) {
 Brick.prototype.render = function() {
     this.context.beginPath();   //  to start drawing the object
 
-    this.context.rect(  this.x,      // x co-ordinate of where it is to be drawn
-                        this.y,       // y co-ordinate of where it is to be drawn
-                        this.width,   // width of the rectangle
-                        this.height); // height of the rectangle
+    this.context.rect(  ,   // x co-ordinate of where it is to be drawn
+                        ,   // y co-ordinate of where it is to be drawn
+                        ,   // width of the rectangle
+                        );  // height of the rectangle
 
     this.context.fill();    //  to fill the brick with color
 }
@@ -214,11 +192,8 @@ Brick.prototype.update = function(){
     //  if ball's highest point crosses brick's lowermost point and
     //  ball's x co-ordinate is greater than x co-ordinate of brick and less than
     //  brick's x co-ordinate + brick's width.
-    if(ball.y-ball.radius < this.y+ this.height && (this.x < ball.x  && ball.x< this.x+this.width) ){
-        ball.dy=-ball.dy
-        return 1;
-    }
-    return 0;
+
+
 }
 
 /*
@@ -281,11 +256,16 @@ var paddle = new Paddle({
 */
 function draw(){
     requestAnimationFrame(draw);
-    context.clearRect(0, 0, canvas.width, canvas.height);
-    ball.render();      //  ball render
-    paddle.render();    //  paddle render
-    brickWall();        //  brickWall render
-    update();           //  update location
+
+    context.clearRect(  ,   //  starting x co-ordinate
+                        ,   //  starting y co-ordinate
+                        ,   //  ending x co-ordinate
+                        );  //  ending y co-ordinate
+
+                        //  ball render
+                        //  paddle render
+                        //  brickWall render
+                        //  update location
 }
 //  one time adding event listeners
 listenKeyPress();
